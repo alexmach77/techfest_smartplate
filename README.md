@@ -9,6 +9,24 @@ source activate techfest_munich
 
 ```
 pip install tensorflow
-conda install -c anaconda flask
+conda install -c anaconda flask gunicorn
 conda install scikit-learn
+pip freeze > requirements.txt
 ```
+
+1. Create github repository
+
+	git init
+	git add README.md
+	git commit -m "first commit"
+	git remote add origin https://github.com/alexmach77/techfest_smartplate.git
+	git push -u origin master
+
+2. Install Heroku
+
+		brew install heroku/brew/heroku
+		cd root project path
+		heroku create
+		git remote -v
+		git remote rename heroku techfest_munich#rename app
+		git push techfest_munich master
