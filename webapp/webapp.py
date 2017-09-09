@@ -9,8 +9,32 @@ app = Flask(__name__)
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
 import time
+
+
+###########################
+#socket io:
+###########################
+import socketio
+import eventlet
+import eventlet.wsgi
+sio = socketio.Server()
+
+@sio.on('connect', namespace='/chat')
+def connect(sid, environ):
+    print("connect ", sid)
+
+@sio.on('chat message', namespace='/chat')
+def message(sid, data):
+    print("message ", data)
+    sio.emit('reply', room=sid)
+
+@sio.on('disconnect', namespace='/chat')
+def disconnect(sid):
+    print('disconnect ', sid)
+
+###########################
+
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -62,4 +86,9 @@ def contact():
 
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    #app.run(port=5000, debug=True)
+    # wrap Flask application with engineio's middleware
+    app = socketio.Middleware(sio, app)
+
+    # deploy as an eventlet WSGI server
+    eventlet.wsgi.server(eventlet.listen(('', 8000)), app)

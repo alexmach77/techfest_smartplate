@@ -8,7 +8,7 @@ source activate techfest_munich
 ```
 
 ```
-pip install tensorflow
+pip install tensorflow python-socketio
 conda install -c anaconda flask gunicorn
 conda install scikit-learn
 pip freeze > requirements.txt
@@ -16,7 +16,8 @@ pip freeze > requirements.txt
 ```
 Create Procfile file in root with:
 
-	web: gunicorn app:app
+	web: gunicorn --pythonpath ./webapp/ webapp:app --log-file=-
+
 
 Create Heroku app
 https://progblog.io/How-to-deploy-a-Flask-App-to-Heroku/
@@ -44,3 +45,38 @@ git push heroku master
 		git remote -v
 		git remote rename heroku techfest_munich#rename app
 		git push techfest_munich master
+
+
+
+####Socket io
+webapp.py
+###########################
+#socket io:
+###########################
+import socketio
+import eventlet
+import eventlet.wsgi
+sio = socketio.Server()
+
+@sio.on('connect', namespace='/chat')
+def connect(sid, environ):
+    print("connect ", sid)
+
+@sio.on('chat message', namespace='/chat')
+def message(sid, data):
+    print("message ", data)
+    sio.emit('reply', room=sid)
+
+@sio.on('disconnect', namespace='/chat')
+def disconnect(sid):
+    print('disconnect ', sid)
+
+###########################
+
+
+if __name__ == '__main__':
+    # wrap Flask application with engineio's middleware
+    app = socketio.Middleware(sio, app)
+
+    # deploy as an eventlet WSGI server
+    eventlet.wsgi.server(eventlet.listen(('', 8000)), app)
