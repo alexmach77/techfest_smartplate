@@ -3,7 +3,8 @@ from flask import Flask, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from config import *
 from flask import render_template
-
+import csv
+import json
 app = Flask(__name__)
 
 if not os.path.exists(UPLOAD_FOLDER):
@@ -44,9 +45,16 @@ def allowed_file(filename):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        # check if the post request has the file part
         request_data = request.get_json()
-        print('request_data',request_data)
+        print('request_data', request_data)
+        print('request_data', type(request_data))
+
+        #print(request_data['id'])
+        #data = json.load(request_data)
+        fields = ['first', 'second', 'third']
+        with open(r'./static/datapi.csv', 'a') as f:
+            writer = csv.writer(f)
+            writer.writerow(fields)
         #return redirect(url_for('uploaded', filename=filename, import_option=import_option, model_name=model_name))
     return render_template("index.html")
 
