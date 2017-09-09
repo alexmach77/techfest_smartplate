@@ -12,7 +12,21 @@ pip install tensorflow
 conda install -c anaconda flask gunicorn
 conda install scikit-learn
 pip freeze > requirements.txt
+
 ```
+Create Procfile file in root with:
+
+	web: gunicorn app:app
+
+Create Heroku app
+https://progblog.io/How-to-deploy-a-Flask-App-to-Heroku/
+heroku login
+cd root
+heroku git:remote -a appname
+
+git add .
+git commit -am 
+git push heroku master
 
 1. Create github repository
 
