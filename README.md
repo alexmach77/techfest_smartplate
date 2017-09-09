@@ -10,7 +10,8 @@ source activate techfest_munich
 ```
 pip install tensorflow python-socketio
 conda install -c anaconda flask gunicorn
-conda install scikit-learn
+conda install scikit-learn nb_conda pandas matplotlib
+
 pip freeze > requirements.txt
 
 ```
