@@ -9,7 +9,7 @@ source activate techfest_munich
 
 ```
 pip install tensorflow python-socketio
-conda install -c anaconda flask gunicorn
+conda install -c flask gunicorn
 conda install scikit-learn nb_conda pandas matplotlib pickleshare
 
 pip freeze > requirements.txt
