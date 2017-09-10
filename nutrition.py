@@ -3,7 +3,7 @@
 nutrition = {
     #calories are in 100 gramms
     #all other in percentage
-    "apple" : {
+    "apples_green" : {
         "calories" : 65 ,
         "proteins" : 2 ,
         "carbs" : 95 ,
@@ -21,16 +21,16 @@ nutrition = {
         "carbs" : 91,
         "fats" : 2
     },
-    "4" : {
-        "calories" : 0,
-        "proteins" : 0,
+    "chicken" : {
+        "calories" : 195,
+        "proteins" : 30,
         "carbs" : 0,
-        "fats" : 0
+        "fats" : 8
     },
-    "5" : {
-        "calories" : 0,
-        "proteins" : 0,
-        "carbs" : 0,
-        "fats" : 0
+    "paprika" : {
+        "calories" : 289,
+        "proteins" : 15,
+        "carbs" :55,
+        "fats" : 13
     }
 }

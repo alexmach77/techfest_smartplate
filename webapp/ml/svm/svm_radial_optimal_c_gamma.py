@@ -18,3 +18,5 @@ grid.fit(X, y)
 
 print("The best parameters are %s with a score of %0.2f"
       % (grid.best_params_, grid.best_score_))
+
+df2 = pd.DataFrame(np.zeros((0, 401)))
