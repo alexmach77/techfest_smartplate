@@ -12,6 +12,9 @@ if not os.path.exists(UPLOAD_FOLDER):
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 import time
 import pickle
+import json
+from nutrition import nutrition
+
 
 ###########################
 #socket io:
@@ -61,7 +64,25 @@ def index():
         clf2 = pickle.load(open(filename, 'rb'))
         time.sleep(0.1)
 
-        print(clf2.predict([request_data]))
+        #print('predicting',clf2.predict([request_data])[0])
+        #print(type(str(clf2.predict([request_data])[0])))
+
+        ##################
+        #scanned food
+        ##################
+        scanned_food = str(clf2.predict([request_data])[0])#"chicken"##clf2.predict([request_data])#"chicken"
+        print("scanned_food",scanned_food)
+        json_string = nutrition[scanned_food]
+        print('type_json_string', type(json_string))
+        print('sending this json',json_string)
+
+        # make a POST request
+        import requests
+        dictToSend = {'question': 'what is the answer?'}
+        res = requests.post('https://polar-shelf-82300.herokuapp.com/publish', json=json_string)
+        print('response from server:', res.text)
+        #dictFromServer = res.json()
+        #print('dictFromServer',dictFromServer)
 
         '''
         # apple
